@@ -7,7 +7,7 @@ fetch("data.json")
     const sortCompanyButton = document.getElementById("sortCompanyButton");
     const resetSortButton = document.getElementById("resetSortButton");
 
-    // Делаем объект с массивами плоскими
+    // Делаем объект с массивами плоским
 
     const allEmployees = Object.values(data).flat();
 
