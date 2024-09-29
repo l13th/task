@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Task</title>
+  </head>
+  <body>
+    <header>
+      <h1 class="task">Список</h1>
+    </header>
+    <main>
+      <div class="buttonSorting">
+        <button class="sorting" id="resetSortButton">Начальная сортировка</button>
+        <button class="sorting" id="sortSalaryButtonMax">Сортировка по зарплате(От наибольшей к наименьшей)</button>
+        <button class="sorting" id="sortSalaryButtonMin">Сортировка по зарплате(От наименьшей к наибольшей)</button>
+        <button class="sorting" id="sortCompanyButton">Сортировка по компаниям</button>
+
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Имя</th>
+            <th>Роль</th>
+            <th>Зарплата</th>
+            <th>Компания</th>
+            <th>Подчинённые</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+      </table>
+    </main>
+  </body>
+  <script src="script.js"></script>
+</html>
