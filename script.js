@@ -96,9 +96,6 @@ fetch("data.json")
       // Функция для закрытия окна с информацией по клику
 
       closeButton.addEventListener("click", () => modal.remove());
-      modal.addEventListener("click", () => {
-        modal.remove();
-      });
 
       // Добавляем элементы друг к другу
 
