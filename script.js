@@ -9,7 +9,24 @@ fetch("data.json")
 
     // Делаем объект с массивами плоским
 
-    const allEmployees = Object.values(data).flat();
+    function createArray(obj) {
+
+      let flatArray = [];
+
+      for (let key in obj) {
+        
+        let keyIndex = obj[key];
+
+        if (Array.isArray(keyIndex)) {
+          flatArray = flatArray.concat(createArray(keyIndex));
+        } else {
+          flatArray.push(keyIndex);
+        }
+      };
+      return flatArray;
+    };
+
+    const allEmployees = createArray(data);
 
     // Функция для создания ячеек с информацией
 
@@ -26,7 +43,7 @@ fetch("data.json")
         `;
         tableBody.appendChild(row);
       });
-    }
+    };
 
     // Функция для сортировки списка по зарплате (От наибольшей к наименьшей)
 
@@ -36,7 +53,7 @@ fetch("data.json")
         const salaryB = Number(b.salary.replace("$", ""));
         return salaryB - salaryA;
       });
-    }
+    };
 
     // функция для сортировки списка по зарплате (От наименьшей к наибольшей)
 
@@ -46,7 +63,7 @@ fetch("data.json")
         const salaryB = Number(b.salary.replace("$", ""));
         return salaryA - salaryB;
       });
-    }
+    };
 
     // Функция для сортировки списка с группировкой сотрудников по компаниям
 
@@ -54,7 +71,7 @@ fetch("data.json")
       return employees.slice().sort((a, b) => {
         return a.company[1].localeCompare(b.company[1]);
       });
-    }
+    };
 
     // Функция для отрисовки окна с подробной информацией о сотруднике
 
@@ -77,7 +94,7 @@ fetch("data.json")
           subordinateInfo += `<li>${subordinate.name} - Зарплата: ${subordinate.salary}, Загруженность: ${subordinate.workload}</li>`;
         });
         subordinateInfo += `</ul>`;
-      }
+      };
 
       // Отрисовка информации
 
@@ -102,20 +119,20 @@ fetch("data.json")
       modalContent.appendChild(closeButton);
       modal.appendChild(modalContent);
       document.body.appendChild(modal);
-    }
+    };
 
     // Функция показа всего списка
 
     function showEmployees(employees) {
       tableBody.innerHTML = "";
       createRows(employees);
-    }
+    };
 
     // Функция обнуления сортировки
 
     function resetSorting() {
       showEmployees(allEmployees);
-    }
+    };
 
     // Кнопки
 
