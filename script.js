@@ -6,6 +6,7 @@ fetch("data.json")
     const sortSalaryButtonMin = document.getElementById("sortSalaryButtonMin");
     const sortCompanyButton = document.getElementById("sortCompanyButton");
     const resetSortButton = document.getElementById("resetSortButton");
+    const sortMaxCompanyButton = document.getElementById("sortMaxCompanyButton");
 
     // Делаем объект с массивами плоским
 
@@ -14,7 +15,7 @@ fetch("data.json")
       let flatArray = [];
 
       for (let key in obj) {
-        
+
         let keyIndex = obj[key];
 
         if (Array.isArray(keyIndex)) {
@@ -22,9 +23,9 @@ fetch("data.json")
         } else {
           flatArray.push(keyIndex);
         }
-      };
+      }
       return flatArray;
-    };
+    }
 
     const allEmployees = createArray(data);
 
@@ -43,7 +44,7 @@ fetch("data.json")
         `;
         tableBody.appendChild(row);
       });
-    };
+    }
 
     // Функция для сортировки списка по зарплате (От наибольшей к наименьшей)
 
@@ -53,7 +54,7 @@ fetch("data.json")
         const salaryB = Number(b.salary.replace("$", ""));
         return salaryB - salaryA;
       });
-    };
+    }
 
     // функция для сортировки списка по зарплате (От наименьшей к наибольшей)
 
@@ -63,7 +64,7 @@ fetch("data.json")
         const salaryB = Number(b.salary.replace("$", ""));
         return salaryA - salaryB;
       });
-    };
+    }
 
     // Функция для сортировки списка с группировкой сотрудников по компаниям
 
@@ -71,7 +72,24 @@ fetch("data.json")
       return employees.slice().sort((a, b) => {
         return a.company[1].localeCompare(b.company[1]);
       });
-    };
+    }
+
+    function sortEmployeesByMaxCompany(employees) {
+      const maxSalaryCompany = {};
+      employees.forEach((employee) => {
+        const employeeCompany = employee.company[0];
+        let employeeSalary = Number(employee.salary.replace("$", ""));
+        if (maxSalaryCompany[employeeCompany] === undefined) {
+          maxSalaryCompany[employeeCompany] = 0;
+          maxSalaryCompany[employeeCompany] += employeeSalary;
+          console.log(maxSalaryCompany);
+        }else {
+          maxSalaryCompany[employeeCompany] += employeeSalary;
+          console.log(maxSalaryCompany);
+        }
+      });
+      console.log(maxSalaryCompany);
+    }
 
     // Функция для отрисовки окна с подробной информацией о сотруднике
 
@@ -94,7 +112,7 @@ fetch("data.json")
           subordinateInfo += `<li>${subordinate.name} - Зарплата: ${subordinate.salary}, Загруженность: ${subordinate.workload}</li>`;
         });
         subordinateInfo += `</ul>`;
-      };
+      }
 
       // Отрисовка информации
 
@@ -119,20 +137,20 @@ fetch("data.json")
       modalContent.appendChild(closeButton);
       modal.appendChild(modalContent);
       document.body.appendChild(modal);
-    };
+    }
 
     // Функция показа всего списка
 
     function showEmployees(employees) {
       tableBody.innerHTML = "";
       createRows(employees);
-    };
+    }
 
     // Функция обнуления сортировки
 
     function resetSorting() {
       showEmployees(allEmployees);
-    };
+    }
 
     // Кнопки
 
@@ -149,6 +167,10 @@ fetch("data.json")
     });
 
     resetSortButton.addEventListener("click", resetSorting);
+
+    sortMaxCompanyButton.addEventListener("click", () => {
+      sortEmployeesByMaxCompany(allEmployees);
+    });
 
     showEmployees(allEmployees);
   });
